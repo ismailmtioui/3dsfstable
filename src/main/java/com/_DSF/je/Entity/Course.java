@@ -43,6 +43,7 @@ public class Course {
     private String pdfType;
 
     @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] pdfData;
 
     private double price;
