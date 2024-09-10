@@ -88,4 +88,7 @@ public class UserService {
     public List<User> searchUsersByUsernameAndRole(String username, Role role) {
         return userRepository.findByUsernameContainingIgnoreCaseAndRole(username, role);
     }
+    public List<User> findStudentsByCourseId(Long courseId) {
+        return userRepository.findStudentsByCourseId(courseId); // Using the repository to get students
+    }
 }

@@ -28,15 +28,15 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
-    @JsonIgnore // Avoid serialization issues
+    @JsonIgnore
     private Set<Course> courses;
 
     @OneToMany(mappedBy = "teacher")
-    @JsonIgnore // Avoid serialization issues
+    @JsonIgnore
     private Set<Course> taughtCourses;
 
     @OneToMany(mappedBy = "student")
-    @JsonIgnore // Avoid serialization issues
+    @JsonIgnore
     private Set<Grade> grades;
     @OneToMany(mappedBy = "user")
     private Set<FAQ> faqs;

@@ -3,6 +3,7 @@ package com._DSF.je.Repository;
 import com._DSF.je.Entity.User;
 import com._DSF.je.Enumeration.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,5 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByUsernameContainingIgnoreCase(String username);
     List<User> findByRole(Role role);
     List<User> findByUsernameContainingIgnoreCaseAndRole(String username, Role role);
+    @Query("SELECT u FROM User u JOIN u.courses c WHERE c.id = :courseId AND u.role = 'STUDENT'")
+    List<User> findStudentsByCourseId(Long courseId);
 
 }
