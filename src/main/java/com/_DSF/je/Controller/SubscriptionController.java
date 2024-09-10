@@ -1,5 +1,6 @@
 package com._DSF.je.Controller;
 
+import com._DSF.je.Entity.Course;
 import com._DSF.je.Entity.User;
 import com._DSF.je.Service.SubscriptionService;
 import com._DSF.je.Service.UserService;
@@ -33,5 +34,10 @@ public class SubscriptionController {
     public ResponseEntity<List<User>> getStudentsSubscribedToCourse(@PathVariable Long courseId) {
         List<User> students = userService.findStudentsByCourseId(courseId); // Using the service class method
         return ResponseEntity.ok(students);
+    }
+    @GetMapping("/user/{userId}/courses")
+    public ResponseEntity<List<Course>> getCoursesForUser(@PathVariable Long userId) {
+        List<Course> courses = userService.findCoursesByUserId(userId); // Using the service class method
+        return ResponseEntity.ok(courses);
     }
 }

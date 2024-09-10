@@ -1,5 +1,6 @@
 package com._DSF.je.Service;
 
+import com._DSF.je.Entity.Course;
 import com._DSF.je.Entity.User;
 import com._DSF.je.Enumeration.Role;
 import com._DSF.je.Repository.UserRepository;
@@ -90,5 +91,12 @@ public class UserService {
     }
     public List<User> findStudentsByCourseId(Long courseId) {
         return userRepository.findStudentsByCourseId(courseId); // Using the repository to get students
+    }
+    public List<Course> findCoursesByUserId(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            return List.copyOf(user.getCourses()); // Return the courses the user is subscribed to
+        }
+        return List.of(); // Return an empty list if the user doesn't exist
     }
 }
