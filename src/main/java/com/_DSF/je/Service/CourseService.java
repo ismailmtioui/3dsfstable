@@ -1,5 +1,6 @@
 package com._DSF.je.Service;
 
+import com._DSF.je.Entity.Category;
 import com._DSF.je.Entity.Course;
 import com._DSF.je.Repository.CourseRepository;
 import org.springframework.data.domain.Sort;
@@ -85,5 +86,25 @@ public class CourseService {
         }
         return courseRepository.filterByPrice(minPrice, maxPrice, sort);
 
+    }
+    public List<Course> recommendCourses(Category category, Double priceRange, String keyword, int limit) {
+
+        List<Course> categoryCourses = courseRepository.findByCategory(category);
+
+        List<Course> priceFilteredCourses = courseRepository.filterByPrice(
+                priceRange != null ? priceRange - 50 : null,
+                priceRange != null ? priceRange + 50 : null,
+                Sort.by(Sort.Direction.DESC, "price")
+        );
+
+        List<Course> finalRecommendations;
+        if (keyword != null && !keyword.isEmpty()) {
+            finalRecommendations = courseRepository.searchCourses(keyword);
+        } else {
+            finalRecommendations = priceFilteredCourses;
+        }
+
+        finalRecommendations.retainAll(categoryCourses);
+        return finalRecommendations.size() > limit ? finalRecommendations.subList(0, limit) : finalRecommendations;
     }
 }

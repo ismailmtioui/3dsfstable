@@ -92,4 +92,17 @@ public class CourseController {
         List<Course> courses = courseService.filterByPrice(minPrice, maxPrice, sortOrder);
         return ResponseEntity.ok(courses);
     }
+    @GetMapping("/recommend")
+    public ResponseEntity<List<Course>> recommendCourses(@RequestParam Long categoryId,
+                                                         @RequestParam(required = false) Double priceRange,
+                                                         @RequestParam(required = false) String keyword,
+                                                         @RequestParam(defaultValue = "5") int limit) {
+        // Step 1: Find the category by ID (this can be retrieved from a CategoryService)
+        Category category = new Category();
+        category.setId(categoryId);
+
+        List<Course> recommendedCourses = courseService.recommendCourses(category, priceRange, keyword, limit);
+
+        return ResponseEntity.ok(recommendedCourses);
+    }
 }
